@@ -1,13 +1,13 @@
-# telegrambot
-Pembuatan Telegrambot
+# Telegrambot
+Create Telegrambot using WebHook Technique
 
-ketik: @Botfather
-pilih: /newbot
+## Create & Register PHP Endpoint
 
-pilih bot name: Hendrasoewarnobot
-pilih username: Hendrasoewarnobot
-
-Anda diberi bot token, simpan bot token anda.
+1. Open Telegram anda find @Botfather
+2. Choose: /newbot
+3. Enter your botname: Hendrasoewarnobot
+4. Enter username: Hendrasoewarnobot
+5. Telegram will issue secret HTTP API token (keep it secretly)
 
 ```
 Done! Congratulations on your new bot. You will find it at t.me/Hendrasoewarnobot.
@@ -20,38 +20,47 @@ Use this token to access the HTTP API:1863288706:AAGC0d01Gv0Ag55p7J65PHPOwgg****
 Keep your token secure and store it safely, it can be used by anyone to control your bot.
 For a description of the Bot API, see this page: https://core.telegram.org/bots/api
 ```
-
-Siapkan URL dan endpoint yang akan dipanggil oleh bot
+6. Prepare your URL and Endpoint that serve telegram bot, and register with telegram using web browser
+```
 https://api.telegram.org/bot{bot_token}/setWebhook?url={your_server_url}
 
-contoh
+example (for CA signed):
 
 https://api.telegram.org/bot1863288706:AAGC0d01Gv0Ag55p7J65PHPOwgg*******/setWebhook?url=https://ec2-3-15-196-245.us-east-2.compute.amazonaws.com/Hendrasoewarnobot/webhook.php
 
-atau 
+or (for Self signed)
 
 curl -F "url=https://ec2-3-15-196-245.us-east-2.compute.amazonaws.com/Hendrasoewarnobot/webhook.php" -F "certificate=@/etc/ssl/myCerts/72576561_ec2-3-15-196-245.us-east-2.compute.amazonaws.com.pem" https://api.telegram.org/bot1863288706:AAGC0d01Gv0Ag55p7J65PHPOwgg********/setWebhook
-
-Kalau anda menggunakan self-sign certificate
-
+```
+7. If succeed, than telegram will response
 jika berhasil akan mendapat pesan
-
+```
 {"ok":true,"result":true,"description":"Webhook was set"}
-
-coba cek sekali lagi
+```
+8. Verify your registration result
+```
 https://api.telegram.org/bot{bot_token}/getWebhookInfo
 
-contoh
+example
 
 https://api.telegram.org/bot1863288706:AAGC0d01Gv0Ag55p7J65PHPOwgg********/getWebhookInfo
 
-kemudian anda dapat juga menghapus webhook dengan perintah
-https://api.telegram.org/bot{bot_token}/deleteWebhook
+{
 
-Pemrograman sisi endpoint webhook.php
-Ketika seorang user mengetik /start
-pada halaman bot anda, maka telegram akan mengirim ke endpoint
+    "ok":true,
+    "result":{
+        "url":"https://ec2-3-15-196-245.us-east-2.compute.amazonaws.com/Hendrasoewarnobot/webhook.php",
+        "has_custom_certificate":true,
+        "pending_update_count":0,
+        "max_connections":40,
+        "ip_address":"3.15.196.245"
+    }
 
+}
+```
+
+## End point preparation
+In WeebHook approach, everytime user interact with your bot, than telegram will send payload to your bot with json format:
 ```
 {
 
@@ -84,8 +93,7 @@ pada halaman bot anda, maka telegram akan mengirim ke endpoint
 
 }
 ```
-
-atau kalau callback
+or callback format for keyboard
 
 ```
 {
@@ -138,8 +146,14 @@ atau kalau callback
 
 ```
 
-catatan:
-message->chat->id: 568577002 atau call_back_query->message->chat->id: 568577002
-merupakan id yang dapat kita gunakan untuk mengirim pesan kembali kepada user tersebut
-
+nb:
+message->chat->id: 568577002 or call_back_query->message->chat->id: 568577002
+is the id we will use to response to several user. We can send message or response
+to user message using
+```
 https://api.telegram.org/bot{bot_token}/sendMessage?chat_id={chat_id}&text={text}
+
+or
+
+https://api.telegram.org/bot{bot_token}/sendMessage?chat_id={chat_id}&text={text}&parse_mode=HTML&reply_markup={keyboard}
+```
