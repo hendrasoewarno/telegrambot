@@ -1,30 +1,12 @@
 <?php
 /*
-ketik: @Botfather
-pilih: /newbot
-
-pilih bot name: Hendrasoewarnobot
-pilih username: Hendrasoewarnobot
-
-Anda diberi bot token, simpan bot token anda.
-
-Siapkan URL dan endpoint yang akan dipanggil oleh bot
-https://api.telegram.org/bot{bot_token}/setWebhook?url={your_server_url}
-
-contoh
-
-https://api.telegram.org/bot1863288706:AAGC0d01Gv0Ag55p7J65PHPOwgg********/setWebhook?url=https://ec2-3-15-196-245.us-east-2.compute.amazonaws.com/Hendrasoewarnobot/webhook.php
-
 buat sertifikat:
 https://www.selfsignedcertificate.com/
 
-Konversi cert menjadi pem
+Convert cert menjadi pem
 openssl x509 -in cert.cer -out cert.pem
 
-
 curl -F "url=https://ec2-3-15-196-245.us-east-2.compute.amazonaws.com/Hendrasoewarnobot/webhook.php" -F "certificate=@/etc/ssl/myCerts/72576561_ec2-3-15-196-245.us-east-2.compute.amazonaws.com.pem" https://api.telegram.org/bot1863288706:AAGC0d01Gv0Ag55p7J65PHPOwggTRUmh7HY/setWebhook
-
-https://api.telegram.org/bot1863288706:AAGC0d01Gv0Ag55p7J65PHPOwgg********/getWebhookInfo
 */
 
 define('BOT_TOKEN', '1863288706:AAGC0d01Gv0Ag55p7J65PHPOwggTRUmh7HY');
@@ -101,19 +83,6 @@ class Bot {
 			$this->response = "callback tidak dikenali!";
 		}
 	}
-	
-/*
-//ini contoh kalau mau buat keyboard
-$keyboard = array(
-    "inline_keyboard" => array(
-	array(
-		array("text" => "\xE2\x9C\x8F Register", "one_time_keyboard" => false, "callback_data" => "1"),
-		array("text" => "\xE2\x98\x91 Verify Account", "one_time_keyboard" => false, "callback_data" => "2")
-		)
-	)
-);
-$keyboard = json_encode($keyboard, true);
-*/
 	
 	function replyToSender() {
 		if ($this->keyboard=="")
