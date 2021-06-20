@@ -9,7 +9,7 @@ openssl x509 -in cert.cer -out cert.pem
 curl -F "url=https://ec2-3-15-196-245.us-east-2.compute.amazonaws.com/Hendrasoewarnobot/webhook.php" -F "certificate=@/etc/ssl/myCerts/72576561_ec2-3-15-196-245.us-east-2.compute.amazonaws.com.pem" https://api.telegram.org/bot1863288706:AAGC0d01Gv0Ag55p7J65PHPOwggTRUmh7HY/setWebhook
 */
 
-define('BOT_TOKEN', '1863288706:AAGC0d01Gv0Ag55p7J65PHPOwggTRUmh7HY');
+define('BOT_TOKEN', '1863288706:AAGC0d01Gv0Ag55p7J65PHPOwgg********');
 define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
 define('MESSAGE', 0);
 define('CALLBACK', 1);
